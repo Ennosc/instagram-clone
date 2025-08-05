@@ -1,6 +1,7 @@
 const cloudinary = require("../middleware/cloudinary");
 const Post = require("../models/Post");
 const Comment = require("../models/Comment");
+const User = require("../models/User");
 
 module.exports = {
   getProfile: async (req, res) => {
@@ -13,7 +14,10 @@ module.exports = {
   },
   getFeed: async (req, res) => {
     try {
-      const posts = await Post.find().sort({ createdAt: "desc" }).lean();
+      const posts = await Post.find().sort({ createdAt: "desc" })
+        .populate("user", "userName")  
+        .lean();
+      console.log(posts, "posts")
       res.render("feed.ejs", { posts: posts });
     } catch (err) {
       console.log(err);
@@ -22,8 +26,19 @@ module.exports = {
   getPost: async (req, res) => {
     try {
       const post = await Post.findById(req.params.id);
-      const comments = await Comment.find({post: req.params.id}).sort({ createdAt: "desc" }).lean();
-      res.render("post.ejs", { post: post, user: req.user, comments: comments });
+      console.log(post)
+      console.log("postuser")
+      console.log(post.user)
+      const author = await User.findById(post.user)
+      console.log("author")
+      console.log(author)
+
+      const comments = await Comment.find({ post: req.params.id })
+        .sort({ createdAt: "desc" })
+        .populate("author", "userName")
+        .lean();
+      console.log(comments, "commenttooo")
+      res.render("post.ejs", { post: post, user: req.user, comments: comments, author: author });
     } catch (err) {
       console.log(err);
     }
@@ -71,6 +86,19 @@ module.exports = {
       await Post.remove({ _id: req.params.id });
       console.log("Deleted Post");
       res.redirect("/profile");
+    } catch (err) {
+      res.redirect("/profile");
+    }
+  },
+
+  deleteComment: async (req, res) => {
+    try {
+      // Find post by id
+      console.log(req.params.id, "req params id")
+      let comment = await Comment.findById({ _id: req.params.id }).lean();
+      await Comment.deleteOne({ _id: req.params.id });
+      console.log("Deleted Comment");
+      res.redirect(`/post/${comment.post}`);
     } catch (err) {
       res.redirect("/profile");
     }

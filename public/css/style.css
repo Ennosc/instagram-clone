@@ -1,0 +1,63 @@
+
+body {
+  background-color: rgb(15, 20, 30); 
+  color: #dcdcdc; 
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+header h1 a {
+  color: #4da3ff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+header h1 a:hover {
+  color: #82c0ff;
+}
+
+header span a {
+  color: #bbbbbb; 
+  text-decoration: none;
+}
+
+header span a:hover {
+  color: #ffffff;
+}
+
+/* === Cards === */
+.card {
+  background-color: rgb(25, 25, 35); 
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+}
+
+
+.card-body p,
+.card-body small {
+  color: #bbbbbb; 
+}
+
+
+.card a {
+  color: #4da3ff;
+}
+
+.card a:hover {
+  color: #82c0ff;
+}
+
+
+.card img {
+  border-radius: 8px;
+  transition: transform 0.2s ease-in-out;
+}
+
+.card img:hover {
+  transform: scale(1.02); 
+}
+
+
+.mb-5 {
+  margin-bottom: 3rem !important;
+}

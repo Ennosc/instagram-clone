@@ -1,15 +1,26 @@
 <%- include('partials/header') -%>
-  <div class="container">
-    <div class="row justify-content-center mt-5">
-      <ul class="row list-unstyled">
-        <% for(var i=0; i<posts.length; i++) {%>
-          <li class="col-12 mt-5 text-center ">
-            <a href="/post/<%= posts[i]._id%>">
-              <img class="img-fluid w-60" src="<%= posts[i].image%>">
+<div class="container">
+  <div class="row justify-content-center mt-5">
+    <div class="col-lg-6 col-md-8 col-sm-10 col-12">
+      <% for(var i=0; i<posts.length; i++) { %>
+        <div class="card shadow-sm border-0 mb-5 text-center" style="background-color: rgb(25, 25, 35);">
+          <div class="card-body">
+            <h4 class="card-title mb-3"><%= posts[i].title %></h4>
+
+            <a href="/post/<%= posts[i]._id %>">
+              <img class="img-fluid rounded" 
+                   src="<%= posts[i].image %>" 
+                   style="max-height: 400px; object-fit: cover;">
             </a>
-          </li>
-        <% } %>
-        </ul>
+
+            <!-- Username -->
+            <p class="text-muted mt-3 mb-0">
+              <small>by <strong><%= posts[i].user.userName %></strong></small>
+            </p>
+          </div>
+        </div>
+      <% } %>
     </div>
-  </div>  
+  </div>
+</div>
 <%- include('partials/footer') -%>
